@@ -6,6 +6,7 @@ using SocketService;
 using System.Net.Sockets;
 using Microsoft.Win32;
 
+
 namespace FnkBstrA
 {
     class FnkBstrA : UDPSocketService
@@ -17,12 +18,14 @@ namespace FnkBstrA
         protected const string returnFail = "l1";
         protected const string returnTooManyLoads = "l2";
 
-        public FnkBstrA( int port ) : base( 44301 )
+        public FnkBstrA( int port )
+            : base( 44301 )
         {
             _port = port;
         }
 
-        public FnkBstrA ( int port, int version ) : base ( 44301 )
+        public FnkBstrA( int port, int version )
+            : base( 44301 )
         {
             _port = port;
             _version = version;
@@ -30,7 +33,7 @@ namespace FnkBstrA
 
         public string[] ParseMemoryCommand( string command )
         {
-            return command.ToString().Split(' ');
+            return command.ToString().Split( ' ' );
         }
 
         public void SetRegistryKeys()
@@ -42,7 +45,7 @@ namespace FnkBstrA
                 hServiceKey.SetValue( "Port", _port );
                 hServiceKey.SetValue( "Version", _version );
             }
-            catch (Exception e)
+            catch( Exception e )
             {
                 Console.WriteLine( "Probably couldn't set registry keys, no permz?" );
                 Console.WriteLine( "Error: {0}", e.Message );
@@ -52,42 +55,43 @@ namespace FnkBstrA
         {
             StateObject sendState = new StateObject();
             sendState.endPoint = state.endPoint; // Need this for sending data backsies.
-            char command = Encoding.ASCII.GetChars(state.buffer, 0, 1)[0];
-            Console.WriteLine("In ProcessBuffer, with a command of {0}", command);
-
-            switch ( command )
+            char command = Encoding.ASCII.GetChars( state.buffer, 0, 1 )[0];
+            Console.WriteLine( "In ProcessBuffer, with a command of {0}", command );
+            // only 'v' command will return something else.
+            sendState.buffer = Encoding.ASCII.GetBytes( returnOk ); 
+            switch( command )
             {
                 case 'l':
-                    Console.WriteLine( "Client sent a service load command: {0} doing absolutely nothing instead.", state.sb.ToString() );
+                    Console.WriteLine( "Client sent a service load command: {0} starting PnkBstrB service.", state.sb.ToString() );
+                    ServiceTools.ServiceInstaller.StartService( "PnkBstrB" );
                     break;
                 case 'm':
                     try
                     {
                         string[] parameters = ParseMemoryCommand( state.sb.ToString() );
-                        Console.WriteLine( "Stupid idiot asked us to dump {0} bytes of memory from process {1}, from base addr: {2}",
+                        Console.WriteLine( "Stupid idiot asked us to dump {0} bytes of memory from process {1}, from base addr: {2:X}",
                                            parameters[2],
                                            parameters[0],
-                                           parameters[1]);
+                                           parameters[1] );
                     }
-                    catch ( Exception e )
+                    catch( Exception e )
                     {
                         Console.WriteLine( "Error splitting up the m command values, stupid idiot sent: {0}", state.sb.ToString() );
                         Console.WriteLine( "Message {0}", e.Message );
                     }
-                    sendState.buffer = Encoding.ASCII.GetBytes( returnOk );
                     break;
                 case 'u':
-                    sendState.buffer = Encoding.ASCII.GetBytes( returnOk );
-                    Console.WriteLine( "Client sent a service unload command, telling it to Fnck off." );
+                    Console.WriteLine( "Client sent a service unload command, just stopping PnkBstrB.exe." );
+                    ServiceTools.ServiceInstaller.StopService( "PnkBstrB" );
                     break;
                 case 'v':
-                    sendState.buffer = Encoding.ASCII.GetBytes( string.Format("v{0}", _version) );
+                    sendState.buffer = Encoding.ASCII.GetBytes( string.Format( "v{0}", _version ) );
                     break;
             }
             sendState.workSocket = new Socket( AddressFamily.InterNetwork,
                                                SocketType.Dgram,
                                                ProtocolType.Udp );
-            SendData( sendState, new AsyncCallback(OnSent) );
+            SendData( sendState, new AsyncCallback( OnSent ) );
         }
     }
 }

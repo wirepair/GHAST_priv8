@@ -10,20 +10,25 @@ namespace SocketService
     // State object for reading client data asynchronously
     public class StateObject
     {
+        #region Properties
         public EndPoint endPoint = null;
         public Socket workSocket = null;
         public const int BUFFER_SIZE = 1400;
         public byte[] buffer = new byte[BUFFER_SIZE];
         // Received data as a string.
         public StringBuilder sb = new StringBuilder();
+        #endregion Properties
     }
 
     public abstract class UDPSocketService
     {
+        #region Properties
         public ManualResetEvent allDone = new ManualResetEvent(false);
         protected int _port = 44301;
         protected IPEndPoint _ilocalEp = null;
+        #endregion Properties
 
+        #region Constructors
         public UDPSocketService( ) { }
         public UDPSocketService( int port )
         {
@@ -35,11 +40,14 @@ namespace SocketService
             _port = port;
             _ilocalEp = ep;
         }
+        #endregion
 
+        #region abstract Methods
         // must be implemented by FnkBstr{A|B}
         public abstract void ProcessBuffer( StateObject state );
+        #endregion
 
-        // Socket handling codez
+        #region Socket Handling Code
         public void StartListening()
         {
             EndPoint localEp = ( EndPoint )_ilocalEp;
@@ -122,8 +130,9 @@ namespace SocketService
                 Console.WriteLine( "The size of the message sent was :" + sent.ToString() );
                 return;
             }
-            
+
         }
+        #endregion
 
     }
 }

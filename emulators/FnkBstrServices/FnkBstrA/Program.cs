@@ -12,7 +12,7 @@ namespace FnkBstrA
             FnkBstrA service = new FnkBstrA(44301);
             service.SetRegistryKeys();
             service.StartListening();
-            
+
         }
     }
 }
