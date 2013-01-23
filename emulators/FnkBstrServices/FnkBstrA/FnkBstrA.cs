@@ -54,11 +54,13 @@ namespace FnkBstrA
         public override void ProcessBuffer( StateObject state )
         {
             StateObject sendState = new StateObject();
-            sendState.endPoint = state.endPoint; // Need this for sending data backsies.
-            char command = Encoding.ASCII.GetChars( state.buffer, 0, 1 )[0];
-            Console.WriteLine( "In ProcessBuffer, with a command of {0}", command );
+            // Need this for sending data backsies.
+            sendState.endPoint = state.endPoint; 
             // only 'v' command will return something else.
-            sendState.buffer = Encoding.ASCII.GetBytes( returnOk ); 
+            sendState.buffer = Encoding.ASCII.GetBytes( returnOk );
+
+            char command = Encoding.ASCII.GetChars(state.buffer, 0, 1)[0];
+            Console.WriteLine("In ProcessBuffer, with a command of {0}", command);
             switch( command )
             {
                 case 'l':

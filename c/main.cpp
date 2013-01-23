@@ -59,7 +59,7 @@ int main( int argc, char **argv )
 		return -1;
 	}
 	pnkbstr = argv[1];
-	functionAddress = strtol(argv[2], &end, 16);
+	functionAddress = strtol( argv[2], &end, 16 );
 	hModule = LoadLibraryA( pnkbstr );
 	if ( hModule == NULL ) 
 	{
