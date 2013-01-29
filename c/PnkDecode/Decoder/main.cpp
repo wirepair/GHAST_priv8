@@ -27,7 +27,7 @@ unsigned int GetPEBaseAddress(const char *inputfile)
 					   NULL);
 	
 	hMapObject = CreateFileMapping( hFile, NULL, PAGE_READONLY, 0, 0, NULL );
-    lpBase = MapViewOfFile( hMapObject, FILE_MAP_READ, 0, 0, 0 );
+	lpBase = MapViewOfFile( hMapObject, FILE_MAP_READ, 0, 0, 0 );
     
 	dosHeader = (PIMAGE_DOS_HEADER)lpBase;
 	if( dosHeader->e_magic != IMAGE_DOS_SIGNATURE )
@@ -40,7 +40,7 @@ unsigned int GetPEBaseAddress(const char *inputfile)
 		imageBase = ntHeader->OptionalHeader.ImageBase;
 	}
 	UnmapViewOfFile( lpBase );
-    CloseHandle( hMapObject );
+	CloseHandle( hMapObject );
 	CloseHandle( hFile );
 	return imageBase;
 }
