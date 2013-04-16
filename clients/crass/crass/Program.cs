@@ -11,7 +11,7 @@ namespace crass
         {
             bool show_help = false;
             string cmd_string = null;
-
+            
 
             int port = 44301; // Default
             var p = new OptionSet() {
@@ -35,24 +35,34 @@ namespace crass
                     ShowHelp(p, "ERROR! -c is required!");
                     return;
                 }
-                PnkBstrAClient pnk = new PnkBstrAClient(port);
-                Console.WriteLine("PnkBstr Client Created!");
+                
                 char cmd = cmd_string[0];
-                if (!(cmd != 'l' || cmd != 'm' || cmd != 'u' || cmd != 'v'))
+                if (!(cmd != 'l' || cmd != 'm' || cmd != 'u' || cmd != 'v' || cmd != 'p'))
                 {
                     ShowHelp(p, "ERROR! Unknown PnkBstrA command requested.");
                     return;
                 }
-
-                Console.WriteLine("Sending Command: {0}", cmd_string);
-                try
+                if (cmd != 'p')
                 {
-                    Console.WriteLine("Response: {0}\n", pnk.sendCommand(cmd_string));
+                    PnkBstrAClient pnk = new PnkBstrAClient(port);
+                    Console.WriteLine("PnkBstr Client Created!");
+                    Console.WriteLine("Sending Command: {0}", cmd_string);
+                    try
+                    {
+                        Console.WriteLine("Response: {0}\n", pnk.SendCommand(cmd_string));
+                    }
+                    catch (System.Net.Sockets.SocketException se)
+                    {
+                        Console.WriteLine("Error Connecting to PnkBstrA, are you sure it's listening on port {0}?", port);
+                        Console.WriteLine("Error: {0}", se.Message);
+                    }
                 }
-                catch (System.Net.Sockets.SocketException se)
+                else
                 {
-                    Console.WriteLine("Error Connecting to PnkBstrA, are you sure it's listening on port {0}?", port);
-                    Console.WriteLine("Error: {0}", se.Message);
+                    pbclClient pbcl = new pbclClient(45301);
+                    Console.WriteLine("Handshake response: {0}", pbcl.SendHandshake());
+                    Console.WriteLine("PnkBstrB Hash: {0}", pbcl.GetPnkBstrBHash());
+                    pbcl.SendFirstEncryptedData();
                 }
             }
             catch (OptionException e)
@@ -76,9 +86,10 @@ namespace crass
             Console.WriteLine("\t\"v\" - Retrieves and prints the PnkBstrA version.");
             Console.WriteLine("\t\"u\" - Unloads the PnkBstrB service.");
             Console.WriteLine("\t\"l<path>\" - Creates a new PnkBstrB service and loads specified binary.");
+            Console.WriteLine("\t\"p\" - emulate pbcl.dll communications.");
             Console.WriteLine("\t\tExample: \"lC:\\windows\\syswow64\\PnkBstrB.xtr\"");
             Console.WriteLine("\t\"m<pid> <base_addr> <size>\" - Reads <size> bytes of memory at \n\t<base_addr> in the process <pid> to C:\\windows\\{0}\\.", Utils.GetSystemDirectory());
-
+            
             Console.WriteLine ();
             Console.WriteLine ("Options:");
             p.WriteOptionDescriptions (Console.Out);
