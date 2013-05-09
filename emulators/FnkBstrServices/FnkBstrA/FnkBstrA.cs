@@ -104,7 +104,7 @@ namespace FnkBstrA
 
         private void LaunchProxyApp()
         {
-            string args = string.Format("-s {0}:{1} -d {0}:{3} -o {4} -f raw", proxy.host, proxy.source_port, proxy.host, proxy.destination_port, proxy.log_file);
+            string args = string.Format("-s {0}:{1} -d {0}:{3} -o {4} -f json", proxy.host, proxy.source_port, proxy.host, proxy.destination_port, proxy.log_file);
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.CreateNoWindow = true;
             startInfo.UseShellExecute = true;
