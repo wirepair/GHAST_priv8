@@ -19,6 +19,7 @@ namespace FnkBstrA
             public string pnkBstrBSubKey = "SOFTWARE\\Even Balance\\";
             public string pnkBstrBserviceKey = "PnkBstrB";
             public string pnkBstrBWow64SubKey = "SOFTWARE\\Wow6432Node\\Even Balance\\";
+            //public string pnkDecrypt = "C:\\Tools\\PnkNetDecryptor.dll";
             public int source_port = 45301;
             public int destination_port = 45308;
             public string proxy_app = "UDPDP.exe";
