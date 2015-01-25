@@ -1,0 +1,10 @@
+pbag notes:
+code1:
+2569EB6F7B4B
+
+
+if server (1), ptr must not be null
+if client (2), ptr must be null.
+
+
+server -> code 0x2712

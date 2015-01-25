@@ -1,0 +1,36 @@
+Name(LocByName("fptr_table")+((xor_idx + 571752132) ^ (xor_idx + 571751504)))
+
+xor_idx = 0
+def x(xor_with):
+    return Name(LocByName("fptr_table")+(xor_with)*4)
+
+
+pb_mersenne_twister
+
+(xor_idx + 578825408) ^ (xor_idx + 578826217)
+
+
+
+sub_43DD65
+
+modifier: 0032b105 (3322117)
+len: 5
+data: BFP4F\0
+output => esi+6c @004020f1 
+
+
+
+modifier:00051274
+size: ba
+data:  00ca974c 1 1 5 3 1   c a f 0   5   6 1   6 7   E D   2 8   D 3   8 1   7 9   2 9   + 1 0 0 0 , 1 0 0   *   *  
+00ca977f *   E D   6 F   D 3   C 6   7 9   6 E   4 B   D C   6 1   6 7   A A   6 F   9 4   8 1   3 E   *   *  
+00ca97b2 *   *   6 7   A A   2 8   D 3   8 1   3 E   *   *   *   *   6 7   A A   2 8   D 3   8 1   3 E   *   *
+00ca97e5   *   *   6 7   E D   6 F   9 4   8 1   3 E   *   *   *   *   2 0 . a 9 5 3 3 1 d c 9 9 f 7 b b b 6 6
+00ca9818 b 3 0 b 1 a e 9 0 a 2 6 2 9 6 8 a 8 a 7 0 9 d 6 4 8 b 4 6 f 0 8 5 3 2 0 7 6 6 3 5 7 e 8 5 8 a 3 8 d 3
+00ca984b d c 4 a b 0 4 f 8 f 3 b e a b 2 f e 9 b 7 a 3 d 5 6 1 b c a 1 b f c 4 a 0 c 0 5 2 a 0 6 0 3 a 4 a 2 e
+00ca987e 2 d b e 8 a 7 d e 0 8 5 5 5 7 c 8 f 9 3 8 6 5 0 3 0 a 3 4 7 b 0 8 f 1 3 6 0 9 9 1 a 9 2 d 7 6 b 8 a 3
+00ca98b1 8 d c c 7 c 2 1 f 4 7 e 6 0 5 3 6 2 a c 5  
+
+
+
+pb_call_ReadProcessMemory

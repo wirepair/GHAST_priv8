@@ -1,0 +1,84 @@
+J [3] 0x43105e c3                      ret  ; 0x401000
+J [3] 0x43105e c3                      ret  ; 0x401025
+J [3] 0x43105e c3                      ret  ; 0x40112b
+J [3] 0x43105e c3                      ret  ; 0x40114e
+J [3] 0x43105e c3                      ret  ; 0x401301
+J [3] 0x43105e c3                      ret  ; 0x401369
+J [3] 0x43105e c3                      ret  ; 0x4020b9
+J [3] 0x43105e c3                      ret  ; 0x4020b9
+J [3] 0x43105e c3                      ret  ; 0x4028ea
+J [3] 0x43105e c3                      ret  ; 0x4030d6
+J [3] 0x43105e c3                      ret  ; 0x4031b6
+J [3] 0x43105e c3                      ret  ; 0x40336e
+J [3] 0x43105e c3                      ret  ; 0x403776
+J [3] 0x43105e c3                      ret  ; 0x40383a
+J [3] 0x43105e c3                      ret  ; 0x403a1e
+J [3] 0x43105e c3                      ret  ; 0x403a9a
+J [3] 0x43105e c3                      ret  ; 0x40648f
+J [3] 0x43105e c3                      ret  ; 0x40652f
+J [3] 0x43105e c3                      ret  ; 0x4065c3
+J [3] 0x43105e c3                      ret  ; 0x40667b
+J [3] 0x43105e c3                      ret  ; 0x40670f
+J [3] 0x43105e c3                      ret  ; 0x406940
+J [3] 0x43105e c3                      ret  ; 0x406ce1
+J [3] 0x43105e c3                      ret  ; 0x406ce1
+J [3] 0x43105e c3                      ret  ; 0x40779c
+J [3] 0x43105e c3                      ret  ; 0x407824
+J [3] 0x43105e c3                      ret  ; 0x407826
+J [3] 0x43105e c3                      ret  ; 0x4082ce
+J [3] 0x43105e c3                      ret  ; 0x408414
+J [3] 0x43105e c3                      ret  ; 0x408743
+J [3] 0x43105e c3                      ret  ; 0x408c05
+J [3] 0x43105e c3                      ret  ; 0x408c05
+J [3] 0x43105e c3                      ret  ; 0x409521
+J [3] 0x43105e c3                      ret  ; 0x409521
+J [3] 0x43105e c3                      ret  ; 0x409588
+J [3] 0x43105e c3                      ret  ; 0x4095f1
+J [3] 0x43105e c3                      ret  ; 0x4095f1
+J [3] 0x43105e c3                      ret  ; 0x40987e
+J [3] 0x43105e c3                      ret  ; 0x4098f7
+J [3] 0x43105e c3                      ret  ; 0x40a7a7
+J [3] 0x43105e c3                      ret  ; 0x410751
+J [3] 0x43105e c3                      ret  ; 0x410a0d
+J [3] 0x43105e c3                      ret  ; 0x410ead
+J [3] 0x43105e c3                      ret  ; 0x410ffc
+J [3] 0x43105e c3                      ret  ; 0x411edc
+J [3] 0x43105e c3                      ret  ; 0x411f35
+J [3] 0x43105e c3                      ret  ; 0x4120db
+J [3] 0x43105e c3                      ret  ; 0x4120db
+J [3] 0x43105e c3                      ret  ; 0x4124d3
+J [3] 0x43105e c3                      ret  ; 0x4124d3
+J [3] 0x43105e c3                      ret  ; 0x412699
+J [3] 0x43105e c3                      ret  ; 0x412699
+J [3] 0x43105e c3                      ret  ; 0x4128e7
+J [3] 0x43105e c3                      ret  ; 0x412eda
+J [3] 0x43105e c3                      ret  ; 0x412eda
+J [3] 0x43105e c3                      ret  ; 0x412ff1
+J [3] 0x43105e c3                      ret  ; 0x412ff1
+J [3] 0x43105e c3                      ret  ; 0x4132f3
+J [3] 0x43105e c3                      ret  ; 0x4132f3
+J [3] 0x43105e c3                      ret  ; 0x4133d1
+J [3] 0x43105e c3                      ret  ; 0x4133d7
+J [3] 0x43105e c3                      ret  ; 0x4133d7
+J [3] 0x43105e c3                      ret  ; 0x413441
+J [3] 0x43105e c3                      ret  ; 0x413500
+J [3] 0x43105e c3                      ret  ; 0x414101
+J [3] 0x43105e c3                      ret  ; 0x41470d
+J [3] 0x43105e c3                      ret  ; 0x4155f4
+J [3] 0x43105e c3                      ret  ; 0x415600
+J [3] 0x43105e c3                      ret  ; 0x415606
+J [3] 0x43105e c3                      ret  ; 0x415630
+J [3] 0x43105e c3                      ret  ; 0x415636
+J [3] 0x43105e c3                      ret  ; 0x415c60
+J [3] 0x43105e c3                      ret  ; 0x416044
+J [3] 0x43105e c3                      ret  ; 0x416240
+J [3] 0x43105e c3                      ret  ; 0x416d13
+
+
+GetTickCount
+00416D13
+SetServiceStatus
+00403A1E
+0043105E
+GetProcAddress
+GetProcAddress

@@ -1,0 +1,28 @@
+1. Identify punkbuster files
+2. Go down the kernel rabbit hole
+3. Refocus on loader
+4. RE (PnkBstrA) loader, completely, create FnkBstrA, create service installer handle commands from pbcl.
+5. Start PnkBstrB, static analysis, lots of it...
+5.a. wrote tool to auto-decrypt strings
+6. Realize this is dumb, taking up too much time, 
+7. Learn PIN, write pin tools to help analyze
+8. Pin tool to hook various things, NetLogger at first
+9. IDAPinLogger, see what code is executed, slow caused timeouts during games
+10. Back to lots of REing
+11. Start looking at pbcl
+11.a. hook pbcl with apispy, get busted by punkbuster for interfering
+12.b. wrote fake pbcl loader and called its exports with data extracted from apispy.
+12. Realize I need to understand pbcl<->pnkbstrb communications
+13. Notice PnkBstrB writes its 'port' to registry, can overwrite with our own port.
+14. Write UDPDP
+15. Modify FnkBstrA to -- on load of PnkBstrB -- overwite port and exec custom UDPDP logger
+16. Identify encryption and decryption routine in PnkBstrB. Also custom hash, session generation. 
+16.a. Wrote custom decryptor for use in UDPDP, had to rewrite a few times. Discuss that.
+17. Back to RE'ing, and write custom client
+
+
+
+General things:
+search for constants, identified md5 screwed up on signedness, MT, TOCTOU check, bug let you read any procs memory, can now be DoSd.
+disregarded POP as a way to write to arbitrary locs
+

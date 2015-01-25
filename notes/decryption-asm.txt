@@ -1,0 +1,82 @@
+﻿ebp = beg of buf
+esi = beg of encrypted buf
+
+ebp = ebp - esi = 0xf6 (-10)
+
+recvlen = 0x43 + -10
+
+
+
+randop = 471207b7
+randop ^ sizeof(encryptedbuf (0x44) = 471207F3
+
+run1:
+00411292  |> 69C9 CD240000  /IMUL ECX,ECX,24CD				//471207F3 * 0x24CD = 0x728E8997
+00411298  |. 8D0432         |LEA EAX,DWORD PTR DS:[EDX+ESI] 		// edx = index esi = start encrypted buf
+0041129B  |. 894424 10      |MOV DWORD PTR SS:[ESP+10],EAX
+0041129F  |. 41             |INC ECX					// 0x728E8997 + 1
+004112A0  |. 8BC1           |MOV EAX,ECX				// eax = 0x728E8998
+004112A2  |. C1E8 02        |SHR EAX,2					// 0x728E8998 >> 2 = 0x1CA3A266
+004112A5  |. B3 0D          |MOV BL,0D					// bl = 0d
+004112A7  |. F6EB           |IMUL BL					// eax = 1CA3052E (0x0d * 0x66 [from AL])
+004112A9  |. 8AD8           |MOV BL,AL					// al = 0x2e
+004112AB  |. 8AC2           |MOV AL,DL					// dl = 0x0 (eax = 0x1ca30500)
+004112AD  |. 04 43          |ADD AL,43					// 0x43 (eax = 0x1ca30543) 0x1ca30543
+004112AF  |. B2 EF          |MOV DL,0EF					// dl = 0xef	
+004112B1  |. F6EA           |IMUL DL					// eax  1CA3FB8D (0xef * 0x43 = 697F ???)
+004112B3  |. 8AD0           |MOV DL,AL					// al = 0x80 (dl = 0x80) eax=1CA3FB8D
+004112B5  |. 8B4424 10      |MOV EAX,DWORD PTR SS:[ESP+10]		// eax = 004255C2 (start enc buff)
+004112B9  |. 2AD3           |SUB DL,BL					// dl = 0x5f	
+004112BB  |. 0010           |ADD BYTE PTR DS:[EAX],DL			// ds:[eax] = EB
+004112BD  |. 8B5424 14      |MOV EDX,DWORD PTR SS:[ESP+14]		// null	
+004112C1  |. 42             |INC EDX					// idx++;
+004112C2  |. 3BD5           |CMP EDX,EBP				// make sure not at end of decryption routine
+004112C4  |. 895424 14      |MOV DWORD PTR SS:[ESP+14],EDX		// store idx on stack
+004112C8  |.^7C C8          \JL SHORT PnkBstrB.00411292
+
+
+run2
+00411292  |> 69C9 CD240000  /IMUL ECX,ECX,24CD				// 0x728E8998 * 0x24CD = 0xC77D8EB8
+00411298  |. 8D0432         |LEA EAX,DWORD PTR DS:[EDX+ESI] 		// edx = index esi = start encrypted buf+1
+0041129B  |. 894424 10      |MOV DWORD PTR SS:[ESP+10],EAX		// store buf back on stack
+0041129F  |. 41             |INC ECX					// 0xC77D8EB8 + 1
+004112A0  |. 8BC1           |MOV EAX,ECX				// eax = 0xC77D8EB9
+004112A2  |. C1E8 02        |SHR EAX,2					// 0xC77D8EB9 >> 2 = 0x31DF63AE
+004112A5  |. B3 0D          |MOV BL,0D					// bl = 0d
+004112A7  |. F6EB           |IMUL BL					// eax = 1CA3052E (0x0d * 0xae [from AL]) (8D6) 0x31DFFBD6
+004112A9  |. 8AD8           |MOV BL,AL					// al = 0xd6
+004112AB  |. 8AC2           |MOV AL,DL					// dl = 0x1 (eax = 0x31DFFB01)
+004112AD  |. 04 43          |ADD AL,43					// 0x43 (eax = 0x31DFFB44) 0x1ca30543
+004112AF  |. B2 EF          |MOV DL,0EF					// dl = 0xef	
+004112B1  |. F6EA           |IMUL DL					// eax = 31DFFB44, edx = 000000EF (0xef * 0x44) after op: eax 31DFFB7C
+004112B3  |. 8AD0           |MOV DL,AL					// al = 0x7c (dl = 0x7c) eax=31DFFB7C
+004112B5  |. 8B4424 10      |MOV EAX,DWORD PTR SS:[ESP+10]		// eax = 004255C2 (start enc buff)
+004112B9  |. 2AD3           |SUB DL,BL					// (bl = d6, dl=7c) = a6
+004112BB  |. 0010           |ADD BYTE PTR DS:[EAX],DL			// ds:[eax] = 0x7e
+004112BD  |. 8B5424 14      |MOV EDX,DWORD PTR SS:[ESP+14]		// 1	
+004112C1  |. 42             |INC EDX					// idx++; 0x2
+004112C2  |. 3BD5           |CMP EDX,EBP				// make sure not at end of decryption routine
+004112C4  |. 895424 14      |MOV DWORD PTR SS:[ESP+14],EDX		// store idx on stack
+004112C8  |.^7C C8          \JL SHORT PnkBstrB.00411292
+
+
+
+
+004255C2  A295D88C  ŒØ•¢ // run 1 (0x8c + 5f) = EB run 2 = 7e
+004255C6  6594AAFF  ÿª”e
+004255CA  06660D23  #.f
+004255CE  7EBC9960  `™¼~
+004255D2  D6D2BBAA  ª»ÒÖ
+004255D6  198643FC  üC†
+004255DA  7CDE3ACB  Ë:Þ|
+004255DE  BCF79895  •˜÷¼
+004255E2  FBAB58C4  ÄX«û
+004255E6  1614AA05  ª
+004255EA  1E5E6679  yf^
+004255EE  F7165701  W÷
+004255F2  02B3EEA8  ¨î³
+004255F6  DBDE07D5  ÕÞÛ
+004255FA  ACE8600D  .`è¬
+004255FE  663A4C73  sL:f
+00425602  0053C709  .ÇS.
+

@@ -1,0 +1,45 @@
+pb_jmp_obfusc_4D32E4_0 -> Send command??
+pb_jmp_obfusc_4D32E4_0 -> Send comand...
+
+pb_jmp_obfusc_4D32E4_8 -> File related?
+
+pb_jmp_obfusc_4FFF22 ???
+args:
+a1,
+len + 4,
+buff,
+1);
+v
+pb_jmp_obfusc_4FFF22
+
+pb_jmp_obfusc_4FFF22)(a1, len + 1, &buff, 4);
+pb_jmp_obfusc_4FFF22)(a1, len + 1, &response_buff, 2);
+
+pb_jmp_obfusc_4D32E4_1 -?
+
+
+pb_jmp_obfusc_4FFF68))(&v17, inputstr)
+pb_jmp_obfusc_4FFF68)(str_unknown, playerstring)
+
+pb_jmp_obfusc_4FFF68)(a12, namestr);
+
+
+a() function calls:
+source = some_pb_dll_export_a(0, 84, 0, 0);
+v2 = some_pb_dll_export_a(0, 82, 0, 0);
+v3 = some_pb_dll_export_a(0, 83, 0, 0);
+v13 = v3;
+dest_len = some_pb_dll_export_a(0, 85, 0, 0);
+
+
+some_pb_dll_export_a(a1, 79, 0, &pb_pbdll_export_data);
+
+pb_jmp_obfusc_4FFF22
+when changed cvar found
+
+
+pb_jmp_obfusc_4FFF22
+arg0,
+len + 1,
+&buff,
+3);

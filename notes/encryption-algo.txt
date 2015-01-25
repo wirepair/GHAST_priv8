@@ -1,0 +1,32 @@
+ v4 = (char *)(&buf[len - 1] - v3);
+    if ( (signed int)v4 > 0 )
+    {
+      v5 = (unsigned int)v4 ^ rand_numb_sk_op_result;
+      for ( i = 0; i < (signed int)v4; ++i )
+      {
+        v5 = 9421 * v5 + 1;
+        *(_BYTE *)(i + v3 + 1) += 17 * i + 13 * ((unsigned int)v5 >> 2) + 115;
+      }
+    }
+
+ 
+v7 = (unsigned int)end_of_recvbuf ^ rand_numb_sk_op_result;
+ do
+    {
+      v39 = (FILE *)&v6[cmd_value];
+      v7 = 9421 * v7 + 1;
+      v6[cmd_value] += 239 * ((_BYTE)v6 + 67) - 13 * ((unsigned int)v7 >> 2);
+      v6 = (char *)hSCObject++ + 1;
+    }
+    while ( (signed int)hSCObject < (signed int)end_of_recvbuf );
+
+
+10C
+0x33930032 ^ 0x3393015C = 16e
+
+0x33930032 + 0xEB67F00D = 
+
+
+0x6E5318B8 ^ 0x6E531AD1
+
+0x6E5318B8 ^ 269 ^ 0xB6A7E887 = D8F4F256

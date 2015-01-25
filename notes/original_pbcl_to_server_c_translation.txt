@@ -1,0 +1,113 @@
+		int idx = 0;
+		DWORD key = 0;
+		DWORD tmp_key = 0;
+		DWORD sub_value = 0;
+		INT8 sub_op = 0;
+		UINT8 final_op = 0;
+		decrypt_key = gRandop ^ (unsigned int)buf_len;
+		tmp_key = decrypt_key;
+
+		for (idx = 0; idx < buf_len; idx++)
+		{
+						
+			tmp_key = (tmp_key * 0x24cd) + 1;
+			sub_value = tmp_key >> 2;			
+			sub_value = (HIWORD(sub_value) << 16) + (WORD)(13 * (INT8)LOBYTE(sub_value));
+			printf("key: %08lx, tmp_key2: %08lx\n", tmp_key, sub_value);
+			sub_op = LOBYTE(sub_value); // save the result of op1 for subtracting later
+			sub_value = (sub_value & 0xFFFFFF00) + LOBYTE(idx) + 0x43;
+
+			sub_value = (HIWORD(sub_value) << 16) + (WORD)( 0xef * (INT8)LOBYTE(sub_value) );
+			//sub_value = (HIWORD(sub_value) << 16) + (WORD)(0xef * (INT8)LOBYTE(sub_value) + 0x43);
+			final_op = (UINT8)( LOBYTE(sub_value) - sub_op);
+			printf("%02x - %02x = final_op %02x\n", (UINT8)sub_op, (UINT8)LOBYTE(sub_value), (UINT8)final_op );
+			buf[idx] = buf[idx] + final_op;
+			printf("%c\n", buf[idx]);
+		}
+// ASM of encrypt
+ if ( (signed int)buf_len > 0 )
+    {
+		decrypt_key = gRandop ^ (unsigned int)buf_len;
+		__asm {
+			mov ecx, decrypt_key // move our key into ecx
+			mov edi, buf_len // buf length after space
+			mov esi, buf // move buf addr into esi
+			xor edx, edx // clear edx
+			xor ebx, ebx // clear out ebx
+	decrypt_lbl:
+			imul ecx, 24CDh      //; ecx = new_randopkey
+			mov eax, buf
+			add eax, edx
+			mov bufptr, eax // ; mov addr of encrypted buff to stack
+			inc ecx
+			mov eax, ecx
+			shr eax, 2
+  			mov bl, 0Dh
+			imul bl
+			mov bl, al // op1
+			mov al, dl 
+			add al, 43h
+			mov dl, 0EFh
+			imul dl
+			mov dl, al
+			mov eax, bufptr
+			sub dl, bl
+			add [eax], dl
+			mov edx, idx
+			inc edx            
+			cmp edx, buf_len
+			mov idx, edx
+			jl short decrypt_lbl //; ecx = new_randopkey
+		}
+    }
+
+
+
+    // ASM for ENCRYPT (server-> client)
+	DWORD encrypt_key = 0;
+	unsigned int idx = 0;
+	unsigned char *buf = NULL;
+	unsigned char *bufptr = NULL;
+	unsigned int buf_len = 0;
+
+	buf = custom_strchr(*clear_buffer, clear_size);
+	if (buf == NULL)
+	{
+		fprintf(outfile, "ERROR: Unable to find space in our input buffer.\n");
+		return;
+	}
+	buf_len = (unsigned int)( &(*clear_buffer[clear_size]) - buf );
+	bufptr = buf;
+	encrypt_key = gRandop ^ (unsigned int)buf_len;
+
+	__asm {
+		xor edx, edx
+		mov edi, encrypt_key
+		mov esi, buf_len
+encrypt_lbl:
+		imul edi,edi,0x24CD
+		mov eax, buf
+		mov edx, idx
+		add eax, edx
+		mov bufptr, eax
+		inc edi
+		mov eax,edi
+		shr eax,2
+		mov bl,0x0D
+		imul bl
+		mov bl,al
+		mov al,dl
+		mov dl,0x11
+		imul dl
+		add bl, al
+		mov eax, bufptr
+		add bl,0x73
+		add [eax], bl
+		inc idx
+		cmp idx,esi
+		jl encrypt_lbl
+	}
+	for (idx = 0; idx < buf_len; ++idx)
+	{
+		fprintf(outfile, "\\x%1x", (unsigned)(unsigned char)buf[idx]);
+	}
