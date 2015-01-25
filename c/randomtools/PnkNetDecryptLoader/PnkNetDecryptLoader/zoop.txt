@@ -1,0 +1,12 @@
+output_size: 10
+handshake start: ab1eaeda9
+output_size: 10
+key is e7eed8a8 randOp is df47b137
+output_size: 10
+hash request: h9e06c64f
+output_size: 34
+hash response: hFE36EB46A7E1251AB5E9F9511DDDE434
+output_size: 20
+Decrypting from client<->server size: 20
+pnk_decrypt_from_client...
+custom_strchr done...
